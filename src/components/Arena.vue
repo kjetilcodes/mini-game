@@ -20,7 +20,7 @@ const world = {
   gravity: 2,
   friction: 0.25,
   maxSpeed: 15,
-  spawnPoint: screenSize / 2
+  spawnPoint: screenSize / 2,
 };
 
 class Creature {
@@ -34,9 +34,9 @@ class Creature {
   }
 
   draw() {
-    const canvas = document.getElementById("Arena");
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "red";
+    const canvas = document.getElementById('Arena');
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'red';
     ctx.fillRect(this.posX, this.posY, this.size, this.size);
   }
 
@@ -56,9 +56,9 @@ class Creature {
   move(event) {
     /* TODO: THIS.OUTOFBOUNDS PROP */
     if (this.momentumX <= world.maxSpeed) {
-      if (event.key === "ArrowLeft") this.momentumX -= this.stepSize;
-      if (event.key === "ArrowRight") this.momentumX += this.stepSize;
-      if (event.key === "ArrowUp") this.jump();
+      if (event.key === 'ArrowLeft') this.momentumX -= this.stepSize;
+      if (event.key === 'ArrowRight') this.momentumX += this.stepSize;
+      if (event.key === 'ArrowUp') this.jump();
     }
   }
 
@@ -69,7 +69,7 @@ class Creature {
   }
 
   collision() {
-    const canvas = document.getElementById("Arena");
+    const canvas = document.getElementById('Arena');
     if (this.posY > world.floor) {
       this.momentumY = -this.momentumY;
       this.posY = world.floor;
@@ -90,20 +90,20 @@ class Creature {
 }
 
 export default {
-  name: "Arena",
+  name: 'Arena',
   data() {
     return {
-      backgroundColor: "#000000",
+      backgroundColor: '#000000',
       creatures: [],
-      animationID: 0
+      animationID: 0,
     };
   },
 
   mounted() {
     // Eventlisteners for resizing and initiation
-    window.addEventListener("load", this.eventDrawCanvas);
-    window.addEventListener("resize", this.eventDrawCanvas);
-    window.addEventListener("keydown", event => {
+    window.addEventListener('load', this.eventDrawCanvas);
+    window.addEventListener('resize', this.eventDrawCanvas);
+    window.addEventListener('keydown', (event) => {
       event.preventDefault();
       this.moveCreatures(event);
     });
@@ -119,21 +119,21 @@ export default {
 
     /* clear canvas */
     clearCanvas() {
-      const canvas = document.getElementById("Arena");
-      const ctx = canvas.getContext("2d");
+      const canvas = document.getElementById('Arena');
+      const ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
 
     /* Resize canvas on redraw */
     eventCanvasResize() {
-      const canvas = document.getElementById("Arena");
+      const canvas = document.getElementById('Arena');
       canvas.height = world.height;
       canvas.width = world.screenSize;
     },
 
     /* Restyle canvas on redraw */
     eventCanvasReStyle() {
-      const canvas = document.getElementById("Arena");
+      const canvas = document.getElementById('Arena');
       canvas.style.backgroundColor = this.backgroundColor;
     },
 
@@ -144,16 +144,16 @@ export default {
     },
 
     moveCreatures(event) {
-      this.creatures.map(e => e.move(event));
+      this.creatures.map((e) => e.move(event));
     },
 
     /* Draw all the creatures */
     drawCreatures() {
-      this.creatures.map(e => {
+      this.creatures.map((e) => {
         e.gravityAndFriction();
         e.updatePosition();
         e.collision();
-        e.draw(document.getElementById("Arena"));
+        e.draw(document.getElementById('Arena'));
         return null;
       });
     },
@@ -172,7 +172,7 @@ export default {
       this.animationID = requestAnimationFrame(this.animate);
       this.eventDrawCanvas();
       return null;
-    }
-  }
+    },
+  },
 };
 </script>
